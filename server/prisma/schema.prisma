@@ -9,6 +9,9 @@ datasource db {
     referentialIntegrity = "prisma"
 }
 
+
+// User table to store a user's info
+
 model User {
     id         Int        @id @default(autoincrement())
     createdAt  DateTime   @default(now())
@@ -29,6 +32,8 @@ model User {
     activities Activity[]
 }
 
+// Post table to record a post's info
+
 model Post {
     id         Int        @id @default(autoincrement())
     createdAt  DateTime   @default(now())
@@ -47,6 +52,8 @@ model Post {
     @@fulltext([title, body])
 }
 
+// Berry table to record the berry info and the post where berry belongs to
+
 model Berry {
     id        Int      @id @default(autoincrement())
     createdAt DateTime @default(now())
@@ -56,6 +63,8 @@ model Berry {
     post      Post     @relation(fields: [postId], references: [id], onUpdate: Cascade, onDelete: Cascade)
     postId    Int
 }
+
+// Comment table to record the comment info and the post where comment belongs to
 
 model Comment {
     id        Int      @id @default(autoincrement())
@@ -69,6 +78,7 @@ model Comment {
     parentId  Int?
 }
 
+// Tag table for users to create and attach their tags over the posts
 model Tag {
     id        Int      @id @default(autoincrement())
     createdAt DateTime @default(now())
@@ -77,6 +87,7 @@ model Tag {
     posts     Post[]
 }
 
+// Activity table to track the post, comment and berry activities
 model Activity {
     id        Int      @id @default(autoincrement())
     createdAt DateTime @default(now())
@@ -88,7 +99,3 @@ model Activity {
     berryId   Int?
     commentId Int?
 }
-
-//1 -> create post
-//2 -> new berry on post
-//3 -> new comment on post
